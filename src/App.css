@@ -39,3 +39,15 @@
     transform: rotate(360deg);
   }
 }
+
+.boton{
+  height: 57px;
+  width: 175px;
+  margin-right:5px!important;
+  margin-left: 5px!important;
+  transition: all .5s ease-in!important;
+}
+
+.boton:hover{
+    letter-spacing: 5px;
+}

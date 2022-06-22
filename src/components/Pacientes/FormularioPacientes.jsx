@@ -1,4 +1,4 @@
-import React, { Children, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import swal from 'sweetalert';
 import './pacientes.css';
@@ -15,8 +15,7 @@ import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import CleaningServicesIcon from '@mui/icons-material/CleaningServices';
-import VisibilityRoundedIcon from '@mui/icons-material/VisibilityRounded';
-import { Link } from 'react-router-dom';
+
 
 const CssTextField = styled(TextField)({
 
@@ -117,6 +116,7 @@ export default function FormularioPacientes() {
   const [genero, setGenero] = useState("Seleccionar");
   const [obraSocial, setObraSocial] = useState("Seleccionar");
   const [numAfiliado, setNumAfiliado] = useState("");
+  const bandera = true 
 
   const handleChangeBuscar = (event) => {
     setBuscar(event.target.value);
@@ -163,7 +163,7 @@ export default function FormularioPacientes() {
   }, []) 
 
   const postDatos = async () => {  // cargar paciente nuevo
-
+    if(validar(bandera)){
     await axios.post(baseURL, {
       dni,
       nombre,
@@ -179,9 +179,11 @@ export default function FormularioPacientes() {
       actualizarBaseDatos()
     }).catch((err) => { fail(err) });
     limpiar();
+    }
   }
   
   const putDatos = async () => { // modifica datos del paciente
+    if(validar(bandera)){
     await axios.put(baseURL + id, {
       dni,
       nombre,
@@ -197,9 +199,10 @@ export default function FormularioPacientes() {
       actualizarBaseDatos()
     }).catch((err) => { fail(err) });
     limpiar();
+    }
   }
 
-  const deleteDatos = async () => { // elimina paciente  REVISAR!!!
+  const deleteDatos = async () => { // elimina paciente  
     await axios.delete(baseURL + id)
     .then((deleteDatos) => {
       success()
@@ -248,7 +251,6 @@ export default function FormularioPacientes() {
         setObraSocial(resp.data.obraSocial)
         setNumAfiliado(resp.data.numAfiliado)
         setBuscar("")
-        validarCampos()
       })
       .catch((err) => {
         fail(err)
@@ -269,22 +271,13 @@ export default function FormularioPacientes() {
     setNumAfiliado("")
   }
 
-  console.log(dni)
-
-function validarCampos(){
-  var bnGuardar = document.getElementById("btnGuardar");
-  var bnBuscar = document.getElementById("btnBuscar");
-
-  bnGuardar.addEventListener("click", validar());
-  bnBuscar.addEventListener("click", validar());
-}
-
-function validar(){
-  if(buscar===" "||dni===" "||nombre===" "||apellido===""||fechaNacimiento===""||telefono===""||direccion===""||genero==="Seleccionar"||obraSocial==="Seleccionar"||numAfiliado===""){
-   alert("Campos vacios");
-   limpiar();
+  function validar(bandera) {
+    if( dni === "" || nombre === "" || apellido === "" || fechaNacimiento === "" || genero === "" || direccion === "" || telefono === "" || obraSocial === "" || numAfiliado === ""){
+      fail("Complete todo los campos")
+      bandera = false
+    }
+    return bandera
   }
-}
 
   return (
     <>
@@ -377,11 +370,6 @@ function validar(){
         <Button className="boton" id="btnGuardar" onClick={postDatos} variant="outlined" startIcon={<SaveRoundedIcon />}>
           GUARDAR
         </Button>
-        <Link to="/verturno">
-        <Button className="boton-turno" id="btnTurnos" variant="outlined" startIcon={<VisibilityRoundedIcon />}>
-          TURNOS
-        </Button>
-        </Link>
       </div>    
     </Box>
     </ThemeProvider>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import swal from 'sweetalert';
 import './medicos.css';
-import {styled, ThemeProvider, createTheme} from '@mui/material/styles';
+import { styled, ThemeProvider, createTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -41,23 +41,23 @@ const CssTextField = styled(TextField)({
 });
 
 const theme = createTheme({
-    palette: {
-      primary: {
-        main: '#00C4CC',
-        contrastText: '#05a1a7',
-      },
-      secondary: {
-        main: '#05a1a7',
-        contrastText: '#05a1a7',
-      },
+  palette: {
+    primary: {
+      main: '#00C4CC',
+      contrastText: '#05a1a7',
     },
-    typography: {
-      allVariants: {
-        fontFamily: 'Poppins',
-        color: '#05a1a7',
-      },
+    secondary: {
+      main: '#05a1a7',
+      contrastText: '#05a1a7',
     },
-  });
+  },
+  typography: {
+    allVariants: {
+      fontFamily: 'Poppins',
+      color: '#05a1a7',
+    },
+  },
+});
 
 const especialidades = [
   {
@@ -114,6 +114,7 @@ const FormularioMedicos = () => {
   const [numMatricula, setNumMatricula] = useState("");
   const [especialidad, setEspecialidad] = useState("Seleccionar");
   const [baseDatos, setBaseDatos] = useState([]);
+  const bandera = true
 
   const handleChangeBuscar = (event) => {
     setBuscar(event.target.value);
@@ -156,39 +157,43 @@ const FormularioMedicos = () => {
   };
 
   const postDatos = async () => {  // cargar medico nuevo
-    await axios.post(baseURL, {
-      dni,
-      nombre,
-      apellido,
-      fechaNacimiento,
-      telefono,
-      direccion,
-      genero,
-      numMatricula,
-      especialidad,
-    }).then(() => {
-      success()
-      actualizarBaseDatos()
-    }).catch((err) => { alert(err); });
+    if (validar(bandera)) {
+      await axios.post(baseURL, {
+        dni,
+        nombre,
+        apellido,
+        fechaNacimiento,
+        telefono,
+        direccion,
+        genero,
+        numMatricula,
+        especialidad,
+      }).then(() => {
+        success()
+        actualizarBaseDatos()
+      }).catch((err) => { fail(err); });
+    }
     limpiar();
   }
 
   const putDatos = async () => { // modifica datos del medico
-    await axios.put(baseURL + id, {
-      dni,
-      nombre,
-      apellido,
-      fechaNacimiento,
-      telefono,
-      direccion,
-      genero,
-      numMatricula,
-      especialidad,
-    }).then(() => {
-      success()
-      actualizarBaseDatos()
-    }).catch((err) => { alert(err); });
-    limpiar();
+    if (validar(bandera)) {
+      await axios.put(baseURL + id, {
+        dni,
+        nombre,
+        apellido,
+        fechaNacimiento,
+        telefono,
+        direccion,
+        genero,
+        numMatricula,
+        especialidad,
+      }).then(() => {
+        success()
+        actualizarBaseDatos()
+      }).catch((err) => { alert(err); });
+      limpiar();
+    }
   }
 
   const deleteDatos = async () => { // elimina medico
@@ -200,18 +205,19 @@ const FormularioMedicos = () => {
     limpiar();
   }
 
-  const success = () =>{
+  const success = () => {
     swal({
-      icon:"success",
-      timer:"2000"
+      icon: "success",
+      timer: "5000"
     })
   }
 
-  const fail = () =>{
+  const fail = (err) => {
     swal({
-      title:"Error",
-      icon:"error",
-      timer:"2000"
+      title: "Error",
+      text: `${err}`,
+      icon: "error",
+      timer: "50000"
     })
   }
 
@@ -224,7 +230,7 @@ const FormularioMedicos = () => {
 
   async function getDatos() {  // buscar al medico con DNI
     const encontrado = baseDatos.find(n => n.dni == buscar) ? baseDatos.find(n => n.dni == buscar).id : 0
-    
+
     await axios.get(baseURL + encontrado)
       .then((resp) => {
         setId(resp.data.id)
@@ -266,98 +272,106 @@ const FormularioMedicos = () => {
     setEspecialidad("Seleccionar")
   }
 
+  function validar(bandera) {
+    if (dni === "" || nombre === "" || apellido === "" || fechaNacimiento === "" || genero === "" || direccion === "" || telefono === "" || especialidad === "" || numMatricula === "") {
+      fail("Complete todo los campos")
+      bandera = false
+    }
+    return bandera
+  }
+
   return (
     <>
-    <ThemeProvider theme={theme}>
-    <Box
-    className='formulario-medicos'
-    component="form"
-    sx={{
-      '& .MuiTextField-root': { m: 1, width: '25ch' },
-    }}
-    noValidate
-    autoComplete="off"
-    >
-      <div>
-        <FormControl>
-          <OutlinedInput
-            className='barra-buscar'
-            id="outlined-adornment"
-            value={buscar}
-            onChange={handleChangeBuscar}
-            startAdornment={<InputAdornment position="start"><SearchRoundedIcon/></InputAdornment>}
-            placeholder="Ingrese DNI del médico"
-            type="number"
-          />
-        </FormControl>
-        <Button className="boton" onClick={getDatos} id="btnBuscar" variant="outlined" startIcon={<SearchRoundedIcon />}>
-          Buscar
-        </Button>
-        <Button className="boton" onClick={limpiar} id="btnBuscar" variant="outlined" startIcon={<CleaningServicesIcon />} type='submit'>
-          Limpiar
-        </Button>
-      </div>
-      <div>
-      <CssTextField id="custom-css-outlined-input" value={dni} onChange={handleChangeDni} label="DNI" variant="outlined" type="number"/>
-      <CssTextField id="custom-css-outlined-input" value={nombre} onChange={handleChangeNombre} label="Nombre" variant="outlined" type="text"/>
-      <CssTextField id="custom-css-outlined-input" value={apellido} onChange={handleChangeApellido} label="Apellido" variant="outlined" type="text"/>
-      <br></br><br></br>
-      </div>
-
-      <div className='container-input'>
-        <CssTextField id="custom-css-outlined-input" value={fechaNacimiento} onChange={handleChangeFechaNacimiento} label="Fecha de nacimiento" variant="outlined" type="date" InputLabelProps={{ shrink: true }}/>
-        <CssTextField 
-          id="custom-css-outlined-input"
-          select
-          label="Género"
-          value={genero}
-          onChange={handleChangeGenero}
-          helperText="Elija un género"
+      <ThemeProvider theme={theme}>
+        <Box
+          className='formulario-medicos'
+          component="form"
+          sx={{
+            '& .MuiTextField-root': { m: 1, width: '25ch' },
+          }}
+          noValidate
+          autoComplete="off"
         >
-        <MenuItem disabled value={'Seleccionar'}>Seleccionar</MenuItem> 
-        {generos.map((option) => (
-          <MenuItem key={option.value} value={option.value}>
-            {option.label}
-          </MenuItem>
-        ))}
-        </CssTextField>
-        <CssTextField
-          className='especialidad' 
-          id="custom-css-outlined-input"
-          select
-          label="Especialidad"
-          value={especialidad}
-          onChange={handleChangeEspecialidad}
-          helperText="Elija una especialidad"
-        >
-        <MenuItem disabled value={'Seleccionar'}>Seleccionar</MenuItem> 
-        {especialidades.map((option) => (
-          <MenuItem key={option.value} value={option.value}>
-            {option.label}
-          </MenuItem>
-        ))}
-      </CssTextField>
-      </div>
+          <div>
+            <FormControl>
+              <OutlinedInput
+                className='barra-buscar'
+                id="outlined-adornment"
+                value={buscar}
+                onChange={handleChangeBuscar}
+                startAdornment={<InputAdornment position="start"><SearchRoundedIcon /></InputAdornment>}
+                placeholder="Ingrese DNI del médico"
+                type="number"
+              />
+            </FormControl>
+            <Button className="boton" onClick={getDatos} id="btnBuscar" variant="outlined" startIcon={<SearchRoundedIcon />}>
+              Buscar
+            </Button>
+            <Button className="boton" onClick={limpiar} id="btnBuscar" variant="outlined" startIcon={<CleaningServicesIcon />} type='submit'>
+              Limpiar
+            </Button>
+          </div>
+          <div>
+            <CssTextField id="custom-css-outlined-input" value={dni} onChange={handleChangeDni} label="DNI" variant="outlined" type="number" />
+            <CssTextField id="custom-css-outlined-input" value={nombre} onChange={handleChangeNombre} label="Nombre" variant="outlined" type="text" />
+            <CssTextField id="custom-css-outlined-input" value={apellido} onChange={handleChangeApellido} label="Apellido" variant="outlined" type="text" />
+            <br></br><br></br>
+          </div>
 
-      <div className='container-input'>
-      <CssTextField id="custom-css-outlined-input" value={direccion} onChange={handleChangeDireccion} label="Dirección" variant="outlined" type="text"/>
-      <CssTextField id="custom-css-outlined-input" value={telefono} onChange={handleChangeTelefono} label="Teléfono" variant="outlined" type="number"/>
-      <CssTextField id="custom-css-outlined-input" value={numMatricula} onChange={handleChangeNumMatricula} label="Nro. Matrícula" variant="outlined" type="number"/>
-      </div>
+          <div className='container-input'>
+            <CssTextField id="custom-css-outlined-input" value={fechaNacimiento} onChange={handleChangeFechaNacimiento} label="Fecha de nacimiento" variant="outlined" type="date" InputLabelProps={{ shrink: true }} />
+            <CssTextField
+              id="custom-css-outlined-input"
+              select
+              label="Género"
+              value={genero}
+              onChange={handleChangeGenero}
+              helperText="Elija un género"
+            >
+              <MenuItem disabled value={'Seleccionar'}>Seleccionar</MenuItem>
+              {generos.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </CssTextField>
+            <CssTextField
+              className='especialidad'
+              id="custom-css-outlined-input"
+              select
+              label="Especialidad"
+              value={especialidad}
+              onChange={handleChangeEspecialidad}
+              helperText="Elija una especialidad"
+            >
+              <MenuItem disabled value={'Seleccionar'}>Seleccionar</MenuItem>
+              {especialidades.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </CssTextField>
+          </div>
 
-      <div className='botones'>
-        <Button className="boton" onClick={putDatos} variant="outlined" startIcon={<EditRoundedIcon />}>
-          EDITAR
-        </Button>
-        <Button className="boton" onClick={deleteDatos} variant="outlined" startIcon={<DeleteRoundedIcon />}>
-          BORRAR
-        </Button>
-        <Button className="boton" onClick={postDatos} variant="outlined" startIcon={<SaveRoundedIcon />} type='submit'>
-          GUARDAR
-        </Button>
-      </div> 
-    </Box>
-    </ThemeProvider>
+          <div className='container-input'>
+            <CssTextField id="custom-css-outlined-input" value={direccion} onChange={handleChangeDireccion} label="Dirección" variant="outlined" type="text" />
+            <CssTextField id="custom-css-outlined-input" value={telefono} onChange={handleChangeTelefono} label="Teléfono" variant="outlined" type="number" />
+            <CssTextField id="custom-css-outlined-input" value={numMatricula} onChange={handleChangeNumMatricula} label="Nro. Matrícula" variant="outlined" type="number" />
+          </div>
+
+          <div className='botones'>
+            <Button className="boton" onClick={putDatos} variant="outlined" startIcon={<EditRoundedIcon />}>
+              EDITAR
+            </Button>
+            <Button className="boton" onClick={deleteDatos} variant="outlined" startIcon={<DeleteRoundedIcon />}>
+              BORRAR
+            </Button>
+            <Button className="boton" onClick={postDatos} variant="outlined" startIcon={<SaveRoundedIcon />} type='submit'>
+              GUARDAR
+            </Button>
+          </div>
+        </Box>
+      </ThemeProvider>
     </>
   )
 }

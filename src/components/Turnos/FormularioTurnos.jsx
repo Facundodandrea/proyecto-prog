@@ -1,7 +1,60 @@
 import React from "react";
 import axios from "axios";
-import { useEffect, useState } from "react";
 import swal from "sweetalert";
+import { useEffect, useState } from "react";
+import {styled, ThemeProvider, createTheme} from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputAdornment from '@mui/material/InputAdornment';
+import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
+import AddRoundedIcon from '@mui/icons-material/AddRounded';
+
+const CssTextField = styled(TextField)({
+
+  '& label': {
+    color: '#05a1a7'
+  },
+  '& label.Mui-focused': {
+    color: '#00C4CC',
+  },
+  '& .MuiInput-underline:after': {
+    borderBottomColor: '#00C4CC',
+  },
+  '& .MuiOutlinedInput-root': {
+    '& fieldset': {
+      borderColor: '#05a1a7',
+    },
+    '&:hover fieldset': {
+      borderColor: '#05a1a7',
+    },
+    '&.Mui-focused fieldset': {
+      borderColor: '#00C4CC',
+    },
+  },
+});
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#00C4CC',
+      contrastText: '#05a1a7',
+      },
+      secondary: {
+        main: '#05a1a7',
+        contrastText: '#05a1a7',
+      },
+    },
+    typography: {
+      allVariants: {
+        fontFamily: 'Poppins',
+        color: '#05a1a7',
+      },
+    },
+  })
 
 export const FormularioTurnos = () => {
   const success = () => {
@@ -35,15 +88,9 @@ export const FormularioTurnos = () => {
   const [hora, setHora] = useState(null);
   const [desactivado, setDesactivado] = useState(true);
   const [turnos, setTurnos] = useState(null);
-  // const [pacJSON, setPacJSON] = useState(null)
   const [espMedico, setEspMedico] = useState([]);
 
   useEffect(() => {
-    // async function obtenerDatosPacientes(){
-    //   const basePacientes = await db_clinica.get('/pacientes/'+ dni).catch(error => {setError(error)});
-    //   setPacientes(basePacientes.data)
-    // }
-    // obtenerDatosPacientes();
 
     axios
       .get("http://localhost:3002/pacientes/")
@@ -71,32 +118,7 @@ export const FormularioTurnos = () => {
       .catch((err) => {
         setError(err);
       });
-
-    /*    axios.get("http://localhost:3002/pacientes").then((resp) => {
-      setPacJSON(resp.data)
-    }).catch((err) => {setError(err)})*/
-
-    // async function obtenerDatosMedicos(){
-    //   const baseMedicos = await db_clinica.get('/medicos/').catch(error => {setError(error)});
-    //   setMedicos(baseMedicos.data)
-    // }
-    // obtenerDatosMedicos(); //obtener datos de medicos
-
-    // async function obtenerDatosTurnos(){
-    //   const baseTurnos = await db_clinica.get('/turnos').catch(error => {setError(error)});
-    //   setTurnos(baseTurnos.data)
-    // }
-    // obtenerDatosTurnos();
   }, []);
-
-  // let turnosJSON = JSON.stringify(turnos)
-  // localStorage.setItem("BaseTurnos", turnosJSON)
-
-  // let medicosJSON = JSON.stringify(medicos)
-  // localStorage.setItem("BaseMedicos", medicosJSON)
-
-  // let pacientesJSON = JSON.stringify(pacJSON)
-  // localStorage.setItem("BasePacientes", pacientesJSON)
 
   if (error)
     return (
@@ -163,142 +185,111 @@ export const FormularioTurnos = () => {
   function cargarMedicos(esp) {
     let cargarEsp = medicos.filter((db) => db.especialidad == esp);
     setEspMedico(cargarEsp);
+    console.log(espMedico)
   }
 
   return (
     <>
-      <h1>Agregar Turno</h1>
-      <br />
 
-      <input
-        type="number"
-        placeholder="ingrese el DNI"
-        onChange={(e) => {
-          setDniPac(e.target.value);
-        }}
-      />
+    <ThemeProvider theme={theme}>
+    <Box
+    className='formulario-pacientes'
+    component="form"
+    sx={{
+      '& .MuiTextField-root': { m: 1, width: '25ch' },
+    }}
+    noValidate
+    autoComplete="off"
+    >
+      <div>
+        <FormControl>
+          <OutlinedInput
+            className='barra-buscar'
+            id="outlined-adornment"
+            value={dniPac}
+            onChange={(e) => {setDniPac(e.target.value)}}
+            startAdornment={<InputAdornment position="start"><SearchRoundedIcon/></InputAdornment>}
+            placeholder="Ingrese DNI del paciente"
+          />
+        </FormControl>
+        <Button className="boton" onClick={() => mandarDato()} id="btnBuscar" variant="outlined" startIcon={<SearchRoundedIcon />}>
+          Buscar
+        </Button>
+      </div>
 
-      <button onClick={() => mandarDato()}>Buscar</button>
-      <br />
-      <br />
+      <div>
+      <CssTextField disabled label={pacientes.dni} id="id"  variant="outlined" type="text"/>
+      <CssTextField disabled label={pacientes.nombre} id="nombre"  variant="outlined" type="text"/>
+      <CssTextField disabled label={pacientes.apellido} id="apellido"  variant="outlined" type="text"/>
+      <br></br>
+      </div>
 
-      <label>DNI: </label>
-      <label id="id">{pacientes.dni}</label>
-      <br />
-      <br />
+      <div>
+      <CssTextField disabled label={pacientes.fechaNacimiento} id="fechaNac" variant="outlined" type="number"/>
+      <CssTextField disabled label={pacientes.direccion} id="direccion" variant="outlined" type="text"/>
+      <CssTextField disabled label={pacientes.telefono} id="telefono" variant="outlined" type="text"/>
+      <br></br>
+      </div>
 
-      <label>Apellido: </label>
-      <label id="apellido">{pacientes.apellido}</label>
-      <br />
-      <br />
+      <div>
+      <CssTextField disabled id="obraSocial" label={pacientes.obraSocial} variant="outlined" type="text"/>
+      <CssTextField disabled id="afiliado" label={pacientes.numAfiliado} variant="outlined" type="text"/>
+      <br></br>
+      </div>
 
-      <label>Nombre: </label>
-      <label id="nombre">{pacientes.nombre}</label>
-      <br />
-      <br />
-
-      <label>Fecha de Nacimiento: </label>
-      <label id="fechaNac">{pacientes.fechaNacimiento}</label>
-      <br />
-      <br />
-
-      <label>Obra Social: </label>
-      <label id="obraSoc">{pacientes.obraSocial}</label>
-      <br />
-
-      <label>N° Afiliado: </label>
-      <label id="afiliado">{pacientes.numAfiliado}</label>
-      <br />
-      <br />
-
-      <label>Direccion: </label>
-      <label id="direccion">{pacientes.direccion}</label>
-      <br />
-      <br />
-
-      <label>Telefono: </label>
-      <label id="telefono">{pacientes.telefono}</label>
-      <br />
-      <br />
-
-      <h4>Asignar Turno</h4>
-
-      <label>Fecha Turno: </label>
-      <input
-        type="date"
-        disabled={desactivado}
-        onChange={(e) => {
-          setFecha(e.target.value);
-        }}
-      />
-      <br />
-      <br />
-
-      <label>Hora: </label>
-      <input
-        type="time"
-        disabled={desactivado}
-        onChange={(e) => {
-          setHora(e.target.value);
-        }}
-      />
-      <br />
-      <br />
-
-      <label>Especialidad: </label>
-      <select
-        name="especialidades"
-        id="especialidad"
-        disabled={desactivado}
-        value={especialidad}
-        onChange={(e) => {
-          setEspecialidad(e.target.value);
-        }}
-      >
-        <option disabled selected>
-          seleccionar
-        </option>
-        <option value="clinico">Clínico</option>
-        <option value="pediatra">Pediatra</option>
-        <option value="gastroenterologo">Gastroenterólogo/a</option>
-        <option value="traumatologo">Traumatólogo/a</option>
-        <option value="dermatologo">Dermatólogo/a</option>
-        <option value="cardiologo">Cardiólogo</option>
-      </select>
-      <br />
-      <br />
-
-      <label>Medico/a: </label>
-      <select
-        name="doctores"
-        id="medico"
-        disabled={desactivado}
-        onClick={() => cargarMedicos(especialidad)}
-        onChange={(e) => {
-          setMedicoElegido(e.target.value);
-        }}
-      >
-        <option value="seleccionar" selected disabled>
-          Seleccionar
-        </option>
-        {espMedico.map((v) => (
-          <option value={v.id}>
-            {v.apellido}, {v.nombre}
-          </option>
-        ))}
-      </select>
-      <br />
-      <br />
-      <br />
-      <br />
-
-      <button
-        id="agregarTurno"
-        onClick={() => publicarTurno()}
-        disabled={desactivado}
-      >
-        Agregar turno
-      </button>
+      <h2 color="#05a1a7">Asignar Turno</h2>
+      <div>
+      <CssTextField disabled={desactivado} onChange={(e) => {setFecha(e.target.value);}} label="Fecha Turno" variant="outlined" type="date" InputLabelProps={{ shrink: true }}/>
+      <CssTextField disabled={desactivado} onChange={(e) => {setHora(e.target.value);}} label="Hora Turno" variant="outlined" type="time" InputLabelProps={{ shrink: true }}/>
+      </div>
+      <div>
+      <CssTextField
+              className='especialidad'
+              id="especialidad"
+              select
+              label="Especialidad"
+              disabled={desactivado}
+              onChange={(e) => {setEspecialidad(e.target.value)}}
+              helperText="Elija una especialidad"
+            >
+              <MenuItem disabled value={'Seleccionar'}>Seleccionar</MenuItem>
+              <MenuItem value={'clinico'}>Clínico</MenuItem>
+              <MenuItem value={'pediatra'}>Pediatra</MenuItem>
+              <MenuItem value={'oftalmologo'}>Oftalmólogo</MenuItem>
+              <MenuItem value={'otorrino'}>Otorrino</MenuItem>
+              <MenuItem value={'ginecologo'}>Ginecólogo</MenuItem>
+              <MenuItem value={'dermatologo'}>Dermatólogo</MenuItem>
+              {/* {especialidades.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))} */}
+            </CssTextField>
+            <CssTextField
+              id="medico"
+              disabled={desactivado}
+              onClick={() => cargarMedicos(especialidad)}
+              onChange={(e) => {
+              setMedicoElegido(e.target.value);
+              }}
+              className='especialidad'
+              select
+              label="Médicos"
+              helperText="Elija un médico"
+            >
+              <MenuItem disabled value={'Seleccionar'}>Seleccionar</MenuItem>
+              {espMedico.map((v) => (
+              <MenuItem value={v.dni}>
+               {v.apellido}, {v.nombre}
+              </MenuItem>
+              ))}
+            </CssTextField>
+      </div>
+      <Button disabled={desactivado} className="boton" id="agregarTurno" onClick={() => publicarTurno()} variant="outlined" startIcon={<AddRoundedIcon />}>
+             AGREGAR
+      </Button>
+      </Box>
+      </ThemeProvider>
     </>
   );
 };
