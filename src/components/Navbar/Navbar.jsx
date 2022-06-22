@@ -20,7 +20,7 @@ function Navbar() {
 
   return (
 
-    <AppBar position="static">
+    <AppBar position="static" style={{background:'#05a1a7',}}>
       <CssBaseline/>
       <Toolbar>
 

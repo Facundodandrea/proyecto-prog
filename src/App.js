@@ -6,7 +6,6 @@ import Medicos from './pages/Medicos/Medicos';
 import Turnos from './pages/Turnos/Turnos';
 import BuscarTurno from './pages/Turnos/BuscarTurno';
 
-
 function App() {
   return (
     <div className="App">

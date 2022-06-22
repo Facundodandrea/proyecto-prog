@@ -1,0 +1,335 @@
+{
+  "pacientes": [
+    {
+      "dni": "1",
+      "nombre": "1",
+      "apellido": "1",
+      "fechaNacimiento": "1111-11-11",
+      "telefono": "1",
+      "direccion": "1",
+      "genero": "femenino",
+      "obraSocial": "prensa",
+      "numAfiliado": "1",
+      "id": 1
+    },
+    {
+      "dni": "2",
+      "nombre": "pierina",
+      "apellido": "2",
+      "fechaNacimiento": "2222-02-22",
+      "telefono": "2",
+      "direccion": "2",
+      "genero": "femenino",
+      "obraSocial": "osde",
+      "numAfiliado": "2",
+      "id": 2
+    },
+    {
+      "dni": "3",
+      "nombre": "Luis Carlos",
+      "apellido": "Hero",
+      "fechaNacimiento": "1985-10-30",
+      "telefono": "3815952510",
+      "direccion": "Ernesto Padilla 40",
+      "genero": "masculino",
+      "obraSocial": "galeno",
+      "numAfiliado": "002-2525485-3",
+      "id": 3
+    },
+    {
+      "dni": "43291375",
+      "nombre": "Facundo",
+      "apellido": "D'Andrea",
+      "fechaNacimiento": "2001-03-16",
+      "telefono": "3814057662",
+      "direccion": "Esteban Echevarria 346",
+      "genero": "masculino",
+      "obraSocial": "particular",
+      "numAfiliado": "0",
+      "id": 4
+    },
+    {
+      "dni": "",
+      "nombre": "",
+      "apellido": "",
+      "fechaNacimiento": "",
+      "telefono": "",
+      "direccion": "",
+      "genero": "Seleccionar",
+      "obraSocial": "Seleccionar",
+      "numAfiliado": "",
+      "id": 5
+    },
+    {
+      "dni": "",
+      "nombre": "",
+      "apellido": "",
+      "fechaNacimiento": "",
+      "telefono": "",
+      "direccion": "",
+      "genero": "Seleccionar",
+      "obraSocial": "Seleccionar",
+      "numAfiliado": "",
+      "id": 6
+    },
+    {
+      "dni": "",
+      "nombre": "",
+      "apellido": "",
+      "fechaNacimiento": "",
+      "telefono": "",
+      "direccion": "",
+      "genero": "Seleccionar",
+      "obraSocial": "Seleccionar",
+      "numAfiliado": "",
+      "id": 7
+    },
+    {
+      "dni": "",
+      "nombre": "",
+      "apellido": "",
+      "fechaNacimiento": "",
+      "telefono": "",
+      "direccion": "",
+      "genero": "Seleccionar",
+      "obraSocial": "Seleccionar",
+      "numAfiliado": "",
+      "id": 8
+    },
+    {
+      "dni": "",
+      "nombre": "",
+      "apellido": "",
+      "fechaNacimiento": "",
+      "telefono": "",
+      "direccion": "",
+      "genero": "Seleccionar",
+      "obraSocial": "Seleccionar",
+      "numAfiliado": "",
+      "id": 9
+    },
+    {
+      "dni": "",
+      "nombre": "",
+      "apellido": "",
+      "fechaNacimiento": "",
+      "telefono": "",
+      "direccion": "",
+      "genero": "Seleccionar",
+      "obraSocial": "Seleccionar",
+      "numAfiliado": "",
+      "id": 10
+    },
+    {
+      "dni": "",
+      "nombre": "",
+      "apellido": "",
+      "fechaNacimiento": "",
+      "telefono": "",
+      "direccion": "",
+      "genero": "Seleccionar",
+      "obraSocial": "Seleccionar",
+      "numAfiliado": "",
+      "id": 11
+    }
+  ],
+  "medicos": [
+    {
+      "id": 1,
+      "dni": 1,
+      "nombre": "Pablo",
+      "apellido": "Marmol",
+      "fechaNacimiento": "1972-08-19",
+      "telefono": "3812585476",
+      "direccion": "Sarmiento 687",
+      "genero": "Masculino",
+      "matricula": "2585475",
+      "especialidad": "traumatologo"
+    },
+    {
+      "id": 2,
+      "dni": 2,
+      "nombre": "Sebastían",
+      "apellido": "Alonso Medida",
+      "fechaNacimiento": "1990-10-29",
+      "telefono": "1125854762",
+      "direccion": "Junin 687",
+      "genero": "Masculino",
+      "matricula": "00025874",
+      "especialidad": "traumatologo"
+    },
+    {
+      "id": 3,
+      "dni": 3,
+      "nombre": "Romina",
+      "apellido": "Rojas Geria",
+      "fechaNacimiento": "1982-02-05",
+      "telefono": "3816585476",
+      "direccion": "Av. Alonso Caritas 1963",
+      "genero": "Femenino",
+      "matricula": "5896",
+      "especialidad": "clinico"
+    },
+    {
+      "id": 4,
+      "dni": 4,
+      "nombre": "Martín Gerardo",
+      "apellido": "Monteros",
+      "fechaNacimiento": "1998-03-21",
+      "telefono": "381658899",
+      "direccion": "México 1125",
+      "genero": "Masculino",
+      "matricula": "475",
+      "especialidad": "clinico"
+    },
+    {
+      "id": 5,
+      "dni": 5,
+      "nombre": "Marcela",
+      "apellido": "Montecarlo",
+      "fechaNacimiento": "1967-08-20",
+      "telefono": "3816998877",
+      "direccion": "Barrio Sitravi II Mzn D Casa 23",
+      "genero": "Femenino",
+      "matricula": "8547",
+      "especialidad": "pediatra"
+    },
+    {
+      "id": 6,
+      "dni": 6,
+      "nombre": "Eugenio Ricardo",
+      "apellido": "García Jimenez",
+      "fechaNacimiento": "1982-02-23",
+      "telefono": "3812585476",
+      "direccion": "Eugenia 687",
+      "genero": "Masculino",
+      "matricula": "2585475",
+      "especialidad": "pediatra"
+    },
+    {
+      "id": 7,
+      "dni": 7,
+      "nombre": "Eugenio Ricardo",
+      "apellido": "García Jimenez",
+      "fechaNacimiento": "1982-02-23",
+      "telefono": "3812585476",
+      "direccion": "Eugenia 687",
+      "genero": "Masculino",
+      "matricula": "2585475",
+      "especialidad": "gastroenterologo"
+    },
+    {
+      "id": 8,
+      "dni": 8,
+      "nombre": "Eugenio Ricardo",
+      "apellido": "García Jimenez",
+      "fechaNacimiento": "1982-02-23",
+      "telefono": "3812585476",
+      "direccion": "Eugenia 687",
+      "genero": "Masculino",
+      "matricula": "2585475",
+      "especialidad": "gastroenterologo"
+    },
+    {
+      "id": 9,
+      "dni": 9,
+      "nombre": "Eugenio Ricardo",
+      "apellido": "García Jimenez",
+      "fechaNacimiento": "1982-02-23",
+      "telefono": "3812585476",
+      "direccion": "Eugenia 687",
+      "genero": "Masculino",
+      "matricula": "2585475",
+      "especialidad": "dermatologo"
+    },
+    {
+      "id": 10,
+      "dni": 10,
+      "nombre": "Eugenio Ricardo",
+      "apellido": "García Jimenez",
+      "fechaNacimiento": "1982-02-23",
+      "telefono": "3812585476",
+      "direccion": "Eugenia 687",
+      "genero": "Masculino",
+      "matricula": "2585475",
+      "especialidad": "cardiologo"
+    },
+    {
+      "dni": "17182147",
+      "nombre": "Juan",
+      "apellido": "Pujo",
+      "fechaNacimiento": "1964-12-15",
+      "telefono": "381444575",
+      "direccion": "Av Alem 500",
+      "genero": "masculino",
+      "numMatricula": "16166675",
+      "especialidad": "otorrino",
+      "id": 11
+    }
+  ],
+  "turnos": [
+    {
+      "dniPac": "1",
+      "medicoElegido": 1,
+      "fecha": "2022-06-21",
+      "hora": "20:30",
+      "id": 2
+    },
+    {
+      "dniPac": "1",
+      "medicoElegido": 1,
+      "fecha": "2022-06-21",
+      "hora": "02:40",
+      "id": 3
+    },
+    {
+      "dniPac": "1",
+      "medicoElegido": 1,
+      "fecha": "2022-06-21",
+      "hora": "20:59",
+      "id": 4
+    },
+    {
+      "dniPac": "43291375",
+      "medicoElegido": "2",
+      "fecha": "2022-06-21",
+      "hora": "22:56",
+      "id": 5
+    },
+    {
+      "dniPac": "43291375",
+      "medicoElegido": "2",
+      "fecha": "2022-06-21",
+      "hora": "23:10",
+      "id": 6
+    },
+    {
+      "dniPac": "43291375",
+      "medicoElegido": "1",
+      "fecha": "2022-06-29",
+      "hora": "23:11",
+      "id": 7
+    },
+    {
+      "dni": "43291375",
+      "medicoElegido": "10",
+      "fecha": "2022-06-21",
+      "hora": "23:13",
+      "id": 8
+    },
+    {
+      "dniPac": "43291375",
+      "medicoElegido": "6",
+      "fecha": "2022-06-21",
+      "hora": "23:25",
+      "id": 9
+    },
+    {
+      "dniPac": "43291375",
+      "medicoElegido": "2",
+      "fecha": "2022-07-01",
+      "hora": "05:26",
+      "id": 10
+    }
+  ]
+}

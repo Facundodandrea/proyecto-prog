@@ -1,0 +1,32 @@
+.MuiButton-root:not(.boton, .ver, .editar, .eliminar, .buscar, .boton-turno) {
+    font-size: 25px;
+    font-family: 'Poppins';
+    padding-right: 40px;
+    padding-left: 40px;
+    margin-left: 20px;
+    transition: all .5s ease-in;
+}
+
+.MuiButton-root:not(.boton, .ver, .editar, .eliminar, .buscar, .boton-turno):hover {
+    color: #cdfdff;
+    letter-spacing: 5px;
+}
+
+.MuiPopover-paper{
+    color:#05a1a7!important;
+    width: 200px!important;
+}
+
+a{
+    text-decoration: none;
+    font-family: 'Poppins'!important;
+    color: rgb(0, 0, 0);
+    padding: 25px;
+    align-items: center;
+}
+
+.nav-btn{
+    display: flex!important;
+    align-items: center!important;
+    justify-content: center!important;
+}
